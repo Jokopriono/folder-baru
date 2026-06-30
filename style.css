@@ -875,6 +875,30 @@ input {
     gap: 24px;
 }
 
+.teacher-grid-descending {
+    align-items: start;
+}
+
+.teacher-grid-descending .teacher-card:nth-child(2) {
+    margin-top: 26px;
+}
+
+.teacher-grid-descending .teacher-card:nth-child(3) {
+    margin-top: 52px;
+}
+
+.teacher-grid-descending .teacher-card:nth-child(4) {
+    margin-top: 78px;
+}
+
+.teacher-grid-descending .teacher-card:nth-child(5) {
+    margin-top: 26px;
+}
+
+.teacher-grid-descending .teacher-card:nth-child(6) {
+    margin-top: 52px;
+}
+
 .teacher-card {
     background: #fff;
     box-shadow: var(--shadow);
@@ -1061,6 +1085,10 @@ input {
     .home-feature-band,
     .teacher-grid {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .teacher-grid-descending .teacher-card:nth-child(n) {
+        margin-top: 0;
     }
 
     .news-card.featured {
