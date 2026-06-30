@@ -521,7 +521,11 @@ input {
 }
 
 .principal-card img {
-    aspect-ratio: 1.1;
+    width: 100%;
+    height: auto;
+    max-height: 360px;
+    aspect-ratio: auto;
+    object-fit: contain;
     margin-bottom: 18px;
 }
 
