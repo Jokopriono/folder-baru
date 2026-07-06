@@ -11,6 +11,30 @@
 				"origin",
 				"main"
 			]
+		},
+		{
+			"label": "export-makalah-pdf-v2",
+			"type": "shell",
+			"command": "\"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\"",
+			"args": [
+				"--headless",
+				"--disable-gpu",
+				"--print-to-pdf=D:\\Folder Baru\\Makalah_Model_Contoh_UMMAH_v2.pdf",
+				"file:///D:/Folder%20Baru/makalah_model_contoh_UMMAH.html"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "export-makalah-pdf-v2-ps",
+			"type": "shell",
+			"command": "& 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'",
+			"args": [
+				"--headless",
+				"--disable-gpu",
+				"\"--print-to-pdf=D:\\Folder Baru\\Makalah_Model_Contoh_UMMAH_v2.pdf\"",
+				"\"file:///D:/Folder%20Baru/makalah_model_contoh_UMMAH.html\""
+			],
+			"isBackground": false
 		}
 	]
 }
