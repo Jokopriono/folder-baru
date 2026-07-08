@@ -330,26 +330,37 @@ a:hover {
 }
 
 .article-item {
-    padding-bottom: 25px;
-    border-bottom: 1px solid var(--border-color);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background: var(--light-bg);
+    padding: 20px;
+    border-radius: 5px;
+    border-left: 5px solid var(--secondary-color);
 }
 
-.article-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+.article-thumb {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 3px;
 }
 
-.article-item h3 {
-    font-size: 1.3rem;
+.article-content h3 {
+    font-size: 1.4rem;
     margin-bottom: 10px;
 }
 
-.article-item h3 a {
+.article-item:last-child {
+    margin-bottom: 0;
+}
+
+.article-content a {
     color: var(--primary-color);
     transition: color 0.3s ease;
 }
 
-.article-item h3 a:hover {
+.article-content a:hover {
     color: var(--secondary-color);
 }
 
@@ -450,6 +461,21 @@ a:hover {
 .announcement-item {
     padding-bottom: 12px;
     border-bottom: 1px solid var(--border-color);
+}
+
+.announcement-media {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.announcement-thumb {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .announcement-item:last-child {
@@ -1045,6 +1071,10 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
+    .article-item {
+        grid-template-columns: 1fr;
+    }
+
     .row {
         grid-template-columns: 1fr;
     }
@@ -1159,7 +1189,16 @@ a:hover {
         border-radius: 3px;
     }
 
+    .article-item {
+        padding: 15px;
+        border-radius: 3px;
+    }
+
     .featured-image {
+        height: 200px;
+    }
+
+    .article-thumb {
         height: 200px;
     }
 
@@ -1247,5 +1286,10 @@ a:hover {
 
     .social-links {
         justify-content: center;
+    }
+
+    .announcement-thumb {
+        width: 58px;
+        height: 58px;
     }
 }
