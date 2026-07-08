@@ -112,7 +112,7 @@ a:hover {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 20px;
 }
 
 .nav-menu a {
@@ -227,38 +227,51 @@ a:hover {
 .page-title {
     background: var(--light-bg);
     padding: 40px 0;
-    text-align: center;
+    text-align: left;
     border-bottom: 2px solid var(--secondary-color);
 }
 
 .page-title h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px;
 }
 
 .page-title p {
     font-size: 1.1rem;
     color: var(--text-muted);
     margin: 0;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px;
 }
 
 /* ================== MAIN CONTENT ================== */
 .main-container {
-    padding: 40px 0;
+    padding: 32px 0;
     background: white;
     min-height: calc(100vh - 300px);
 }
 
 .layout-2col {
     display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 30px;
+    grid-template-columns: minmax(0, 0.86fr) 270px;
+    justify-content: start;
+    gap: 22px;
+}
+
+.content-main {
+    font-size: 0.95rem;
 }
 
 /* ================== SECTIONS ================== */
 .section {
-    margin-bottom: 40px;
-    padding-bottom: 30px;
+    margin-bottom: 30px;
+    padding-bottom: 24px;
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -268,8 +281,8 @@ a:hover {
 
 .section-title {
     font-size: 1.8rem;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
     border-bottom: 3px solid var(--secondary-color);
 }
 
@@ -286,9 +299,11 @@ a:hover {
 
 .featured-image {
     width: 100%;
-    height: 250px;
-    object-fit: cover;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain;
     border-radius: 3px;
+    background: var(--light-bg);
 }
 
 .featured-content h3 {
@@ -341,9 +356,11 @@ a:hover {
 
 .article-thumb {
     width: 100%;
-    height: 250px;
-    object-fit: cover;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain;
     border-radius: 3px;
+    background: var(--light-bg);
 }
 
 .article-content h3 {
@@ -383,13 +400,25 @@ a:hover {
 
 .news-image img {
     width: 100%;
-    height: 300px;
-    object-fit: cover;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain;
     transition: transform 0.3s ease;
+    background: var(--light-bg);
 }
 
 .news-image img:hover {
     transform: scale(1.05);
+}
+
+.news-item h3 {
+    font-size: 1.2rem;
+}
+
+.news-item .date,
+.news-item p,
+.news-item .read-more {
+    font-size: 0.9rem;
 }
 
 /* ================== SIDEBAR ================== */
@@ -409,7 +438,7 @@ a:hover {
 .widget-header {
     background: var(--primary-color);
     color: white;
-    padding: 15px;
+    padding: 12px;
 }
 
 .widget-header h3 {
@@ -419,15 +448,17 @@ a:hover {
 }
 
 .widget-body {
-    padding: 15px;
+    padding: 12px;
 }
 
 .widget-logo {
     width: 100%;
-    height: 120px;
-    object-fit: cover;
+    height: auto;
+    max-height: 120px;
+    object-fit: contain;
     margin-bottom: 10px;
     border-radius: 3px;
+    background: var(--light-bg);
 }
 
 .widget-body p {
@@ -472,10 +503,11 @@ a:hover {
 .announcement-thumb {
     width: 65px;
     height: 65px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 4px;
     border: 1px solid var(--border-color);
     flex-shrink: 0;
+    background: var(--light-bg);
 }
 
 .announcement-item:last-child {
@@ -513,9 +545,10 @@ a:hover {
 .photo-card img {
     width: 100%;
     height: 180px;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     transition: transform 0.35s ease;
+    background: var(--light-bg);
 }
 
 .photo-card:hover img {
@@ -555,11 +588,13 @@ a:hover {
 
 .description-photo {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
+    height: auto;
+    max-height: 220px;
+    object-fit: contain;
     border-radius: 4px;
     margin-bottom: 12px;
     border: 1px solid var(--border-color);
+    background: var(--light-bg);
 }
 
 .facility-card i,
@@ -1172,7 +1207,7 @@ a:hover {
     }
 
     .main-container {
-        padding: 25px 0;
+        padding: 20px 0;
     }
 
     .layout-2col {
@@ -1180,8 +1215,8 @@ a:hover {
     }
 
     .section {
-        margin-bottom: 25px;
-        padding-bottom: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
     }
 
     .featured-news {
@@ -1194,12 +1229,10 @@ a:hover {
         border-radius: 3px;
     }
 
-    .featured-image {
-        height: 200px;
-    }
-
-    .article-thumb {
-        height: 200px;
+    .featured-image,
+    .article-thumb,
+    .news-image img {
+        max-height: 200px;
     }
 
     .facilities-grid,
@@ -1222,7 +1255,8 @@ a:hover {
     }
 
     .description-photo {
-        height: 180px;
+        height: auto;
+        max-height: 180px;
     }
 
     .steps-container {
