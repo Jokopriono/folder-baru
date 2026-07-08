@@ -527,6 +527,15 @@ a:hover {
     transform: translateY(-5px);
 }
 
+.description-photo {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color);
+}
+
 .facility-card i,
 .value-card i,
 .extracurricular-card i,
@@ -1171,6 +1180,10 @@ a:hover {
     .extracurricular-card,
     .contact-card {
         padding: 15px;
+    }
+
+    .description-photo {
+        height: 180px;
     }
 
     .steps-container {
