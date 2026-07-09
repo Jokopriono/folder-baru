@@ -208,6 +208,12 @@ declare(strict_types=1);
         <a href="users.php" class="<?= ($active_menu ?? '') === 'users' ? 'active' : '' ?>">
             <i class="fas fa-users"></i> Pengguna
         </a>
+        <a href="news.php" class="<?= ($active_menu ?? '') === 'news' ? 'active' : '' ?>">
+            <i class="fas fa-newspaper"></i> Berita
+        </a>
+        <a href="content.php" class="<?= ($active_menu ?? '') === 'content' ? 'active' : '' ?>">
+            <i class="fas fa-edit"></i> Konten Website
+        </a>
 
         <div class="sidebar-divider"></div>
         <div class="sidebar-section">Akun Saya</div>

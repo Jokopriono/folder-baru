@@ -41,7 +41,7 @@
     <div class="ticker-info">
         <div class="container">
             <span class="ticker-label">SEKILAS INFO</span>
-            <div class="ticker-content">
+            <div class="ticker-content" id="ticker-content">
                 <span>Selamat Datang di Website MTs Muhammadiyah Bireuen</span>
                 <span>|</span>
                 <span>PPDB 2026/2027 Dibuka</span>
@@ -56,8 +56,8 @@
     <div class="hero-banner">
         <img src="Image/Kegiatan%201.jpeg" alt="Seleksi Beasiswa Thalabah Hafizh Al-Qur'an" class="hero-image">
         <div class="hero-overlay">
-            <h2>Mencerdaskan Bangsa</h2>
-            <p>Membentuk Generasi Islami, Cerdas, Berkarakter</p>
+            <h2 id="hero-title">Mencerdaskan Bangsa</h2>
+            <p id="hero-subtitle">Membentuk Generasi Islami, Cerdas, Berkarakter</p>
         </div>
     </div>
 
@@ -273,7 +273,32 @@
     </a>
 
     <script src="script.js"></script>
-</body>
+    <script>
+    // Muat konten dinamis dari backend jika di jaringan lokal
+    (function(){
+        function isLocalNet(){
+            const h=location.hostname;
+            return h==='localhost'||h==='127.0.0.1'||/^10\./.test(h)||/^192\.168\./.test(h)||/^172\.(1[6-9]|2[0-9]|3[01])\./.test(h);
+        }
+        if(!isLocalNet()) return;
+        fetch('backend/contents.php')
+            .then(r=>r.json())
+            .then(data=>{
+                if(!data.success) return;
+                const c=data.data;
+                // Ticker
+                const tickers=[c.ticker_1?.value,c.ticker_2?.value,c.ticker_3?.value].filter(Boolean);
+                if(tickers.length){
+                    const tc=document.getElementById('ticker-content');
+                    if(tc) tc.innerHTML=tickers.map((t,i)=>(i>0?'<span>|</span>':'')+`<span>${t}</span>`).join('');
+                }
+                // Hero
+                if(c.hero_title?.value) document.getElementById('hero-title').textContent=c.hero_title.value;
+                if(c.hero_subtitle?.value) document.getElementById('hero-subtitle').textContent=c.hero_subtitle.value;
+            })
+            .catch(()=>{});
+    })();
+    </script>
 </html>
 
 
