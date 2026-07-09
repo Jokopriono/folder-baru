@@ -1,25 +1,16 @@
 <?php
 /**
- * backend/setup.php
- * ─────────────────────────────────────────────────────────────
- *  Script setup SATU KALI untuk membuat akun admin pertama.
- *  PENTING: HAPUS file ini setelah dijalankan!
- *
- *  Langkah:
- *    1. Pastikan database & tabel sudah dibuat (jalankan database/schema.sql)
- *    2. Buka di browser: http://localhost/backend/setup.php
- *    3. Catat kredensial yang ditampilkan
- *    4. SEGERA hapus file ini dari server
- * ─────────────────────────────────────────────────────────────
+ * backend/setup.php — Buat akun admin pertama kali
+ * PENTING: HAPUS file ini setelah dijalankan!
  */
-
 declare(strict_types=1);
 
-// Keamanan: hanya bisa diakses dari localhost
-$allowed_ips = ['127.0.0.1', '::1'];
-if (!in_array($_SERVER['REMOTE_ADDR'] ?? '', $allowed_ips, true)) {
+// Kunci akses — hanya yang tahu token ini bisa buka halaman ini
+define('SETUP_TOKEN', 'MtsBireuen2026Setup');
+
+if (($_GET['token'] ?? '') !== SETUP_TOKEN) {
     http_response_code(403);
-    die('Akses ditolak.');
+    die('Akses ditolak. Tambahkan ?token=MtsBireuen2026Setup di URL.');
 }
 
 require_once __DIR__ . '/config.php';
