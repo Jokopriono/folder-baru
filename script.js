@@ -9,9 +9,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Sembunyikan tombol Login di navbar jika bukan localhost (mis. GitHub Pages)
-    const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
-    if (!isLocalhost) {
+    // Sembunyikan tombol Login di navbar jika bukan jaringan lokal (mis. GitHub Pages)
+    function isLocalNetwork() {
+        const h = location.hostname;
+        return h === 'localhost'
+            || h === '127.0.0.1'
+            || h === '::1'
+            || /^10\./.test(h)
+            || /^192\.168\./.test(h)
+            || /^172\.(1[6-9]|2[0-9]|3[01])\./.test(h);
+    }
+    if (!isLocalNetwork()) {
         const loginNavLink = document.querySelector('.nav-menu a[href*="login.html"]');
         if (loginNavLink) {
             loginNavLink.parentElement.style.display = 'none';

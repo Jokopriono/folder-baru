@@ -350,11 +350,20 @@
     <script src="script.js"></script>
     <script>
         // ── Deteksi environment ───────────────────────────────────────
-        const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
+        function isLocalNetwork() {
+            const h = location.hostname;
+            return h === 'localhost'
+                || h === '127.0.0.1'
+                || h === '::1'
+                || /^10\./.test(h)
+                || /^192\.168\./.test(h)
+                || /^172\.(1[6-9]|2[0-9]|3[01])\./.test(h);
+        }
+        const isLocal = isLocalNetwork();
         const BACKEND_URL = 'backend/login.php';
 
-        // Jika bukan localhost (mis. GitHub Pages), tampilkan pesan informasi
-        if (!isLocalhost) {
+        // Jika bukan jaringan lokal (mis. GitHub Pages), tampilkan pesan informasi
+        if (!isLocal) {
             const form     = document.getElementById('login-form');
             const alert    = document.getElementById('login-alert');
             const subtitle = document.querySelector('.login-subtitle');
@@ -415,8 +424,8 @@
                 : '<i class="fas fa-sign-in-alt"></i> MASUK';
         }
 
-        // Cek session hanya jika di localhost
-        if (isLocalhost) {
+        // Cek session hanya jika di jaringan lokal
+        if (isLocal) {
             fetch('backend/session_check.php', { credentials: 'include' })
                 .then(r => r.json())
                 .then(data => {
