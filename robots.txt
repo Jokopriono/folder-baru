@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Hindari area admin dan backend di hasil pencarian
+Disallow: /admin/
+Disallow: /backend/
+
+Sitemap: https://mtsmuhbireuen.infinityfreeapp.com/sitemap.xml
