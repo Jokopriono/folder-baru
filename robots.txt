@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://mtsmuhbireuen.infinityfreeapp.com/sitemap.xml

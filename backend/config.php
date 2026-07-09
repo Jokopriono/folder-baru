@@ -8,9 +8,11 @@ error_reporting(E_ALL);
 //  Konfigurasi Database — sesuaikan dengan environment Anda
 // ============================================================
 define('DB_HOST', 'sql206.infinityfree.com');  // ← dari cPanel
+define('DB_PORT', '3306');
 define('DB_NAME', 'if0_42369395_mts');             // ← dari cPanel
 define('DB_USER', 'if0_42369395');                 // ← dari cPanel
 define('DB_PASS', 'CEicUDWupLAv');              // ← dari cPanel
+define('DB_CHARSET', 'utf8mb4');
 
 // ============================================================
 //  Konfigurasi Session
