@@ -9,6 +9,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Sembunyikan tombol Login di navbar jika bukan localhost (mis. GitHub Pages)
+    const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
+    if (!isLocalhost) {
+        const loginNavLink = document.querySelector('.nav-menu a[href*="login.html"]');
+        if (loginNavLink) {
+            loginNavLink.parentElement.style.display = 'none';
+        }
+    }
+
     // Close menu when clicking on a link
     const navLinks = document.querySelectorAll('.nav-menu a');
     navLinks.forEach(link => {

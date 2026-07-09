@@ -349,8 +349,38 @@
 
     <script src="script.js"></script>
     <script>
-        // ── Konfigurasi ──────────────────────────────────────────────
-        const BACKEND_URL   = 'backend/login.php';
+        // ── Deteksi environment ───────────────────────────────────────
+        const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
+        const BACKEND_URL = 'backend/login.php';
+
+        // Jika bukan localhost (mis. GitHub Pages), tampilkan pesan informasi
+        if (!isLocalhost) {
+            const form     = document.getElementById('login-form');
+            const alert    = document.getElementById('login-alert');
+            const subtitle = document.querySelector('.login-subtitle');
+
+            subtitle.textContent = 'Login admin hanya tersedia di jaringan lokal sekolah.';
+
+            alert.innerHTML = `
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <strong>Akses Admin Tidak Tersedia di Sini</strong><br>
+                    Halaman login ini hanya dapat digunakan melalui server lokal sekolah (XAMPP).<br>
+                    Buka <strong>http://localhost/mts-bireuen/login.html</strong> di komputer sekolah.
+                </div>`;
+            alert.className = 'login-alert info';
+            alert.style.display = 'flex';
+            alert.style.gap = '10px';
+            alert.style.alignItems = 'flex-start';
+            alert.style.background = '#eaf3fb';
+            alert.style.color = '#2980b9';
+            alert.style.border = '1px solid #bee3f8';
+
+            // Nonaktifkan form
+            form.querySelectorAll('input, button[type=submit]').forEach(el => el.disabled = true);
+            document.querySelector('.btn-login').style.opacity = '0.5';
+        }
+
         // Redirect berdasarkan role: admin/operator → dashboard, lainnya → index
         function getRedirectUrl(role) {
             return ['admin','operator'].includes(role) ? 'admin/dashboard.php' : 'index.html';
@@ -385,15 +415,17 @@
                 : '<i class="fas fa-sign-in-alt"></i> MASUK';
         }
 
-        // Cek session: jika sudah login, redirect langsung
-        fetch('backend/session_check.php', { credentials: 'include' })
-            .then(r => r.json())
-            .then(data => {
-                if (data.logged_in) {
-                    window.location.replace(getRedirectUrl(data.user.role));
-                }
-            })
-            .catch(() => { /* abaikan jika backend belum ada */ });
+        // Cek session hanya jika di localhost
+        if (isLocalhost) {
+            fetch('backend/session_check.php', { credentials: 'include' })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.logged_in) {
+                        window.location.replace(getRedirectUrl(data.user.role));
+                    }
+                })
+                .catch(() => { /* abaikan */ });
+        }
 
         // ── Submit form login ─────────────────────────────────────────
         document.getElementById('login-form').addEventListener('submit', async (e) => {
