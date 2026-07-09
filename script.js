@@ -3,14 +3,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
 
+    // Redirect otomatis dari GitHub Pages ke hosting PHP agar fitur login tetap bekerja.
+    const isGithubDomain = location.hostname.endsWith('.github.io');
+    if (isGithubDomain) {
+        const targetHost = 'https://mtsmuhbireuen.infinityfreeapp.com';
+        const knownRepoPrefix = /^\/(folder-baru|-Selamat-Datang-MTs-Muhammadiyah-Bireuen)(?=\/|$)/;
+        const cleanPath = location.pathname.replace(knownRepoPrefix, '') || '/';
+        const targetUrl = targetHost + cleanPath + location.search + location.hash;
+        window.location.replace(targetUrl);
+        return;
+    }
+
     if (navToggle) {
         navToggle.addEventListener('click', function() {
             navMenu.classList.toggle('show');
         });
     }
 
-    // Sembunyikan tombol Login di navbar hanya di GitHub Pages (tidak punya backend)
-    const isGithubPages = location.hostname.endsWith('.github.io') || location.protocol === 'file:';
+    // Sembunyikan tombol Login di navbar hanya jika dibuka langsung sebagai file lokal.
+    const isGithubPages = location.protocol === 'file:';
     if (isGithubPages) {
         const loginNavLink = document.querySelector('.nav-menu a[href*="login.html"]');
         if (loginNavLink) loginNavLink.parentElement.style.display = 'none';
