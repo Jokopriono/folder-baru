@@ -349,43 +349,26 @@
 
     <script src="script.js"></script>
     <script>
-        // ── Deteksi environment ───────────────────────────────────────
-        function isLocalNetwork() {
-            const h = location.hostname;
-            return h === 'localhost'
-                || h === '127.0.0.1'
-                || h === '::1'
-                || /^10\./.test(h)
-                || /^192\.168\./.test(h)
-                || /^172\.(1[6-9]|2[0-9]|3[01])\./.test(h);
-        }
-        const isLocal = isLocalNetwork();
+        // Deteksi GitHub Pages (github.io) — tidak punya backend PHP
+        const isGithubPages = location.hostname.endsWith('.github.io') || location.protocol === 'file:';
         const BACKEND_URL = 'backend/login.php';
 
-        // Jika bukan jaringan lokal (mis. GitHub Pages), tampilkan pesan informasi
-        if (!isLocal) {
+        // Jika GitHub Pages, nonaktifkan form (tidak ada backend)
+        if (isGithubPages) {
             const form     = document.getElementById('login-form');
-            const alert    = document.getElementById('login-alert');
+            const alertEl  = document.getElementById('login-alert');
             const subtitle = document.querySelector('.login-subtitle');
 
-            subtitle.textContent = 'Login admin hanya tersedia di jaringan lokal sekolah.';
-
-            alert.innerHTML = `
+            subtitle.textContent = 'Login admin tidak tersedia di GitHub Pages.';
+            alertEl.innerHTML = `
                 <i class="fas fa-info-circle"></i>
                 <div>
-                    <strong>Akses Admin Tidak Tersedia di Sini</strong><br>
-                    Halaman login ini hanya dapat digunakan melalui server lokal sekolah (XAMPP).<br>
-                    Buka <strong>http://localhost/mts-bireuen/login.html</strong> di komputer sekolah.
+                    <strong>Akses Admin Tidak Tersedia</strong><br>
+                    Halaman ini membutuhkan server PHP. Gunakan hosting yang mendukung PHP
+                    atau akses melalui jaringan lokal sekolah.
                 </div>`;
-            alert.className = 'login-alert info';
-            alert.style.display = 'flex';
-            alert.style.gap = '10px';
-            alert.style.alignItems = 'flex-start';
-            alert.style.background = '#eaf3fb';
-            alert.style.color = '#2980b9';
-            alert.style.border = '1px solid #bee3f8';
-
-            // Nonaktifkan form
+            alertEl.className = 'login-alert info';
+            alertEl.style.cssText = 'display:flex;gap:10px;align-items:flex-start;background:#eaf3fb;color:#2980b9;border:1px solid #bee3f8';
             form.querySelectorAll('input, button[type=submit]').forEach(el => el.disabled = true);
             document.querySelector('.btn-login').style.opacity = '0.5';
         }
@@ -424,8 +407,8 @@
                 : '<i class="fas fa-sign-in-alt"></i> MASUK';
         }
 
-        // Cek session hanya jika di jaringan lokal
-        if (isLocal) {
+        // Cek session jika ada backend (bukan GitHub Pages)
+        if (!isGithubPages) {
             fetch('backend/session_check.php', { credentials: 'include' })
                 .then(r => r.json())
                 .then(data => {

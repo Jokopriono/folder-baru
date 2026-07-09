@@ -9,21 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Sembunyikan tombol Login di navbar jika bukan jaringan lokal (mis. GitHub Pages)
-    function isLocalNetwork() {
-        const h = location.hostname;
-        return h === 'localhost'
-            || h === '127.0.0.1'
-            || h === '::1'
-            || /^10\./.test(h)
-            || /^192\.168\./.test(h)
-            || /^172\.(1[6-9]|2[0-9]|3[01])\./.test(h);
-    }
-    if (!isLocalNetwork()) {
+    // Sembunyikan tombol Login di navbar hanya di GitHub Pages (tidak punya backend)
+    const isGithubPages = location.hostname.endsWith('.github.io') || location.protocol === 'file:';
+    if (isGithubPages) {
         const loginNavLink = document.querySelector('.nav-menu a[href*="login.html"]');
-        if (loginNavLink) {
-            loginNavLink.parentElement.style.display = 'none';
-        }
+        if (loginNavLink) loginNavLink.parentElement.style.display = 'none';
     }
 
     // Close menu when clicking on a link
