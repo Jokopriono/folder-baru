@@ -156,7 +156,7 @@
                         </div>
                         <div class="widget-body">
                             <img src="Image/Kegiatan%204.jpeg" alt="Kegiatan siswa MTs Muhammadiyah Bireuen" class="widget-logo">
-                            <p>MTs Muhammadiyah Bireuen merupakan madrasah yang menguatkan pendidikan agama, akademik, kedisiplinan, dan akhlak mulia.</p>
+                            <p id="about-text">MTs Muhammadiyah Bireuen merupakan madrasah yang menguatkan pendidikan agama, akademik, kedisiplinan, dan akhlak mulia.</p>
                             <a href="tentang.html" class="btn-text">Profil Lengkap ›</a>
                         </div>
                     </div>
@@ -172,8 +172,8 @@
                                     <div class="announcement-media">
                                         <img src="Image/3512.jpg.jpeg" alt="Pengumuman jadwal penilaian" class="announcement-thumb">
                                         <div>
-                                            <a href="#">Jadwal Penilaian Akhir Semester</a>
-                                            <span class="date">15 Juni 2026</span>
+                                            <a href="#" id="announcement-1-title">Jadwal Penilaian Akhir Semester</a>
+                                            <span class="date" id="announcement-1-date">15 Juni 2026</span>
                                         </div>
                                     </div>
                                 </div>
@@ -181,8 +181,8 @@
                                     <div class="announcement-media">
                                         <img src="Image/3538.jpg.jpeg" alt="Pengumuman undangan wali murid" class="announcement-thumb">
                                         <div>
-                                            <a href="#">Undangan Pertemuan Wali Murid</a>
-                                            <span class="date">13 Juni 2026</span>
+                                            <a href="#" id="announcement-2-title">Undangan Pertemuan Wali Murid</a>
+                                            <span class="date" id="announcement-2-date">13 Juni 2026</span>
                                         </div>
                                     </div>
                                 </div>
@@ -190,8 +190,8 @@
                                     <div class="announcement-media">
                                         <img src="Image/tasmi'.jpeg" alt="Pengumuman pembukaan PPDB" class="announcement-thumb">
                                         <div>
-                                            <a href="#">PPDB 2026/2027 Resmi Dibuka</a>
-                                            <span class="date">10 Juni 2026</span>
+                                            <a href="#" id="announcement-3-title">PPDB 2026/2027 Resmi Dibuka</a>
+                                            <span class="date" id="announcement-3-date">10 Juni 2026</span>
                                         </div>
                                     </div>
                                 </div>
@@ -215,9 +215,9 @@
                             <h3>Kontak Kami</h3>
                         </div>
                         <div class="widget-body">
-                            <p><strong>Telepon:</strong> +62 895 0521 1062</p>
-                            <p><strong>Email:</strong> mtsmuhammadiyah@hotmail.com</p>
-                            <p><strong>Alamat:</strong> Jl. Putro Bungsu, 02 Geulanggang Bireuen, Kota Juang, Bireuen</p>
+                            <p><strong>Telepon:</strong> <span id="contact-phone">+62 895 0521 1062</span></p>
+                            <p><strong>Email:</strong> <a id="contact-email-link" href="mailto:mtsmuhammadiyah@hotmail.com"><span id="contact-email">mtsmuhammadiyah@hotmail.com</span></a></p>
+                            <p><strong>Alamat:</strong> <span id="contact-address">Jl. Putro Bungsu, 02 Geulanggang Bireuen, Kota Juang, Bireuen</span></p>
                         </div>
                     </div>
 
@@ -278,13 +278,16 @@
 
     <script src="script.js"></script>
     <script>
-    // Muat konten dinamis dari backend jika di jaringan lokal
+    // Muat konten dinamis dari backend
     (function(){
-        function isLocalNet(){
-            const h=location.hostname;
-            return h==='localhost'||h==='127.0.0.1'||/^10\./.test(h)||/^192\.168\./.test(h)||/^172\.(1[6-9]|2[0-9]|3[01])\./.test(h);
+        if(location.protocol==='file:') return;
+
+        function safeSetText(id, value){
+            if(!value) return;
+            const el=document.getElementById(id);
+            if(el) el.textContent=value;
         }
-        if(!isLocalNet()) return;
+
         fetch('backend/contents.php')
             .then(r=>r.json())
             .then(data=>{
@@ -294,11 +297,30 @@
                 const tickers=[c.ticker_1?.value,c.ticker_2?.value,c.ticker_3?.value].filter(Boolean);
                 if(tickers.length){
                     const tc=document.getElementById('ticker-content');
-                    if(tc) tc.innerHTML=tickers.map((t,i)=>(i>0?'<span>|</span>':'')+`<span>${t}</span>`).join('');
+                    if(tc) tc.innerHTML=tickers.map((t,i)=>(i>0?'<span>|</span>':'')+`<span>${String(t).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}</span>`).join('');
                 }
                 // Hero
-                if(c.hero_title?.value) document.getElementById('hero-title').textContent=c.hero_title.value;
-                if(c.hero_subtitle?.value) document.getElementById('hero-subtitle').textContent=c.hero_subtitle.value;
+                safeSetText('hero-title', c.hero_title?.value);
+                safeSetText('hero-subtitle', c.hero_subtitle?.value);
+
+                // Sidebar beranda
+                safeSetText('about-text', c.about_text?.value);
+                safeSetText('contact-phone', c.contact_phone?.value);
+                safeSetText('contact-email', c.contact_email?.value);
+                safeSetText('contact-address', c.contact_address?.value);
+
+                // Pengumuman beranda
+                safeSetText('announcement-1-title', c.announcement_1_title?.value);
+                safeSetText('announcement-1-date', c.announcement_1_date?.value);
+                safeSetText('announcement-2-title', c.announcement_2_title?.value);
+                safeSetText('announcement-2-date', c.announcement_2_date?.value);
+                safeSetText('announcement-3-title', c.announcement_3_title?.value);
+                safeSetText('announcement-3-date', c.announcement_3_date?.value);
+
+                const emailLink=document.getElementById('contact-email-link');
+                if(emailLink && c.contact_email?.value){
+                    emailLink.href='mailto:'+c.contact_email.value;
+                }
             })
             .catch(()=>{});
     })();
